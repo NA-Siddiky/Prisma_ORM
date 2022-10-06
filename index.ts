@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.post("/", async (req: Request, res: Response) => {
   const { username, password } = req.body;
+  console.log("req.body>>", req.body);
   const user = await prisma.user.create({
     data: {
       username: username,
@@ -34,9 +35,18 @@ app.put("/", async (req: Request, res: Response) => {
       username: username,
     },
   });
+  res.json(updatedUser);
 });
 
-app.delete("/:id", async (req: Request, res: Response) => {});
+app.delete("/:id", async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const deletedUser = await prisma.user.delete({
+    where: {
+      id: Number(id),
+    },
+  });
+  res.json(deletedUser);
+});
 
 app.listen(PORT, () => {
   console.log(`app is running at http://localhost:${PORT}`);
