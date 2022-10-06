@@ -20,6 +20,15 @@ app.post("/", async (req: Request, res: Response) => {
   res.json(user);
 });
 
+app.post("/manyUsers", async (req: Request, res: Response) => {
+  const { userList } = req.body;
+  console.log("req.body>>", userList);
+  const users = await prisma.user.createMany({
+    data: userList,
+  });
+  res.json(users);
+});
+
 app.get("/", async (req: Request, res: Response) => {
   const users = await prisma.user.findMany();
   res.json(users);
