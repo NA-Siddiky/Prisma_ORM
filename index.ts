@@ -27,6 +27,7 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.put("/", async (req: Request, res: Response) => {
   const { id, username } = req.body;
+  console.log("req.body", req.body);
   const updatedUser = await prisma.user.update({
     where: {
       id: id,
